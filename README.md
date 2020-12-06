@@ -111,7 +111,9 @@ python train.py $DATAPATH \
 ```
 
 ### Generation
-Generate on the test data split using the fairseq script. For the tasks that report tokenized BLEU scores:
+We generate on the test data split using the fairseq script. Different scripts are used to evaluate using different metrics. 
+
+For the tasks that uses the multi-bleu script:
 ```
 python scripts/average_checkpoints.py --inputs $SAVE \
     --num-epoch-checkpoints 10 --output "${SAVE}/checkpoint_last10_avg.pt"
@@ -121,6 +123,20 @@ CUDA_VISIBLE_DEVICES=0 fairseq-generate $DATAPATH \
     --lenpen 1 --gen-subset test --quiet --user-dir my  \
     --bert-model-name pretrained/$BERT
 ```
+
+For the tasks that additionally perform compound split:
+```
+python scripts/average_checkpoints.py --inputs $SAVE \
+    --num-epoch-checkpoints 10 --output "${SAVE}/checkpoint_last10_avg.pt"
+
+CUDA_VISIBLE_DEVICES=0 fairseq-generate $DATAPATH \
+    --path "${SAVE}/checkpoint_last10_avg.pt" --batch-size 64 --beam 4 --remove-bpe \
+    --lenpen 0.6 --gen-subset test --user-dir my  \
+    --bert-model-name pretrained/$BERT > ${SAVE}/gen.txt
+
+source scripts/compound_split_bleu.sh ${SAVE}/gen.txt
+```
+
 For the tasks that report sacreBLEU scores:
 ```
 python scripts/average_checkpoints.py --inputs $SAVE \
