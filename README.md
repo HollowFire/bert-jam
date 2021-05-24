@@ -150,3 +150,10 @@ CUDA_VISIBLE_DEVICES=0 fairseq-generate $DATAPATH \
 source scripts/calc_sacrebleu.sh $src $tgt $SAVE/gen.txt
 ```
 
+# Trained Models
+
+| Model | Files |
+| :- | :- |
+| IWSLT'14 De-En | [iwslt14_de_en.tar.gz](https://pan.baidu.com/s/18LfVolLWhHXEegfebtbBkw)  (Extration Code: a5yh) | 
+| WMT'14 En-De | [wmt14_en_de.tar.gz.00](https://pan.baidu.com/s/1mA1GlWttQd3msNSsLtH_AQ) (Extration Code: pegt) <br> [wmt14_en_de.tar.gz.01](https://pan.baidu.com/s/1jAvBnoIlpZm2s8pMDJf4-g) (Extration Code: o49a) |
+
